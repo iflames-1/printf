@@ -9,10 +9,11 @@ Tasks:
 	Prototype: int _printf(const char *format, ...);
 	write output to stdout, the standard output stream
 - Handle the following custom conversion specifiers:
-	c, s, %, d, i, b, u, o, x, X, S, p
+	c, s, %, d, i, b, u, o, x, X, S, p, r, R.
 - Use a local buffer of 1024 chars in order to call write as little as possible.
 - Handle the following flag characters for non-custom conversion specifiers:
 	+, space, #
 - Handle the field width for non-custom conversion specifiers.
 - Handle the precision for non-custom conversion specifiers.
-- 
+- Handle the 0 flag character for non-custom conversion specifiers.
+- Handle the - flag character for non-custom conversion specifiers.
