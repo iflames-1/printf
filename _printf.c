@@ -6,11 +6,11 @@ void print_buffer(char buffer[], int *buff_index);
  *
  * @format: Format string
  *
- * Return: Number of characters printed (excluding the null byte)
+ * Return: Number of characters printed_chars (excluding the null byte)
  */
 int _printf(const char *format, ...)
 {
-	int j, printed = 0, printed_char = 0;
+	int format_index, printed_chars = 0, printed = 0;
 	int flag, width, precision, size, buff_index = 0;
 	va_list args;
 	char buffer[BUFF_SIZE];
@@ -23,19 +23,19 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 
 	/* Loop through the format string */
-	for (j = 0; format && format[j] != '\0'; j++)
+	for (format_index = 0; format && format[format_index] != '\0'; format_index++)
 	{
 		/* If character is not '%', add it to the buffer */
-		if (format[j] != '%')
+		if (format[format_index] != '%')
 		{
-			buffer[buff_index++] = format[j];
+			buffer[buff_index++] = format[format_index];
 
 			/* Check if buffer is full, print its contents and reset index */
 			if (buff_index == BUFF_SIZE)
 				print_buffer(buffer, &buff_index);
 
-			/* Increment the count of printed characters */
-			printed_char++;
+			/* Increment the count of printed_chars characters */
+			printed++;
 		}
 		else /* Handle format specifiers */
 		{
@@ -43,24 +43,24 @@ int _printf(const char *format, ...)
 			print_buffer(buffer, &buff_index);
 
 			/* Parse flag, width, precision, and size from format */
-			flag = get_flags(format, &j);
-			width = get_width(format, &j, args);
-			precision = get_precision(format, &j, args);
-			size = get_size(format, &j);
+			flag = get_flags(format, &format_index);
+			width = get_width(format, &format_index, args);
+			precision = get_precision(format, &format_index, args);
+			size = get_size(format, &format_index);
 
 			/* Move to the specifier character after '%' */
-			++j;
+			++format_index;
 
 			/* Process the format specifier and print its value */
-			printed = handle_print(format, &j, args, buffer,
+			printed_chars = handle_print(format, &format_index, args, buffer,
 				flag, width, precision, size);
 
 			/* Check for error in handle_print and return -1 if needed */
-			if (printed == -1)
+			if (printed_chars == -1)
 				return (-1);
 
-			/* Increment the count of printed characters */
-			printed_char += printed;
+			/* Increment the count of printed_chars characters */
+			printed += printed_chars;
 		}
 	}
 
@@ -70,8 +70,8 @@ int _printf(const char *format, ...)
 	/* End the variable argument args */
 	va_end(args);
 
-	/* Return the total number of printed characters */
-	return (printed_char);
+	/* Return the total number of printed_chars characters */
+	return (printed);
 }
 
 /**

@@ -9,46 +9,46 @@
 #define BUFF_SIZE 1024
 
 /* FLAGS */
-#define F_MINUS 1
-#define F_PLUS 2
-#define F_ZERO 4
-#define F_HASH 8
-#define F_SPACE 16
+#define LEFT_JUSTIFY_FLAG 1
+#define PLUS_FLAG 2
+#define ZERO_PADDING_FLAG 4
+#define ALTERNATE_FORM_FLAG 8
+#define SPACE_FLAG 16
 
 /* SIZES */
-#define S_LONG 2
-#define S_SHORT 1
+#define SIZE_LONG 2
+#define SIZE_SHORT 1
 
 /**
- * struct fmt - Struct op
+ * struct CustomFormat - Struct op
  *
- * @fmt: The format.
- * @fn: The function associated.
+ * @CustomFormat: The format.
+ * @handler: The function associated.
  */
-struct fmt
+struct CustomFormat
 {
-	char fmt;
-	int (*fn)(va_list, char[], int, int, int, int);
+	char CustomFormat;
+	int (*handler)(va_list, char[], int, int, int, int);
 };
 
 /**
- * typedef struct fmt fmt_t - Struct op
+ * typedef struct CustomFormat fmt_t - Struct op
  *
- * @fmt: The format.
+ * @CustomFormat: The format.
  * @fm_t: The function associated.
  */
-typedef struct fmt fmt_t;
+typedef struct CustomFormat fmt_t;
 int _printf(const char *format, ...);
-int handle_print(const char *fmt, int *i,
+int handle_print(const char *CustomFormat, int *i,
 va_list args, char buffer[], int flag, int width, int precision, int size);
 
 /****************** FUNCTIONS ******************/
 
 /* width handler */
 int write_num(int ind, char bff[], int flag, int width, int precision,
-	int length, char padd, char extra_c);
+	int length, char padd, char extraChar);
 int write_pointer(char buffer[], int ind, int length,
-	int width, int flag, char padd, char extra_c, int padd_start);
+	int width, int flag, char padd, char extraChar, int padd_start);
 int write_unsgnd(int is_negative, int ind, char buffer[],
 	int flag, int width, int precision, int size);
 int handle_write_char(char c, char buffer[],
